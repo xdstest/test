@@ -1,0 +1,16 @@
+*.pyc
+.DS_Store
+._*
+/.vagrant
+/.settings
+/.project
+/.pydevproject
+*.sublime-workspace
+*.sublime-project
+/.idea
+/instagram/settings/production.py
+/instagram/settings/develop.py
+/media
+/static/dest
+/static/_node_modules
+
