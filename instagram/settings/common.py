@@ -73,6 +73,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static', 'dest')
 
+AUTH_USER_MODEL = 'instagram.User'
+
 TEMPLATE_DEFAULT_NAME = 'jinja'
 TEMPLATES = [
     {
