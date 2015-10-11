@@ -12,5 +12,5 @@
 /instagram/settings/develop.py
 /media
 /static/dest
-/static/_node_modules
+/node_modules
 

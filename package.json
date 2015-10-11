@@ -1,0 +1,41 @@
+{
+  "name": "instagram",
+  "version": "0.0.1",
+  "description": "",
+  "repository": "",
+  "dependencies": {
+    "classnames": "",
+    "flux": "",
+    "history": "",
+    "isomorphic-fetch": "",
+    "keymirror": "",
+    "lodash": "",
+    "object-assign": "",
+    "react": "",
+    "react-dom": "",
+    "react-mixin": "",
+    "react-router": ""
+  },
+  "devDependencies": {
+    "autoprefixer-loader": "",
+    "babel-core": "",
+    "babel-eslint": "",
+    "babel-jest": "",
+    "babel-loader": "",
+    "css-loader": "",
+    "eslint": "",
+    "eslint-plugin-react": "",
+    "extract-text-webpack-plugin": "",
+    "file-loader": "",
+    "react-hot-loader": "^1.3.0",
+    "style-loader": "",
+    "stylus-loader": "",
+    "url-loader": "",
+    "webpack": "",
+    "webpack-dev-server": ""
+  },
+  "scripts": {
+    "start": "node server.js",
+    "build": "NODE_ENV=production webpack -p"
+  }
+}
