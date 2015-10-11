@@ -75,6 +75,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static', 'dest')
 
 AUTH_USER_MODEL = 'instagram.User'
 
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+)
+
 TEMPLATE_DEFAULT_NAME = 'jinja'
 TEMPLATES = [
     {
