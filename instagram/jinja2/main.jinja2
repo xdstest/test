@@ -3,6 +3,9 @@
 {% block page %}
 	<nav class="navbar">
 		<div class="container">
+			{% if user %}
+				<span class="navbar-brand">Hey, {{ user.username }}!</span>
+			{% endif %}
 			<ul class="nav navbar-nav navbar-right">
 				{% if user %}
 					{% block navbar_btn_sign_out %}<li><a href="{{ url('user-sign-out') }}" role="button" class="btn btn-default navbar-btn">Sign out</a></li>{% endblock %}
