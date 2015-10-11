@@ -5,15 +5,16 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link href="{{ static('index.bundle.css') }}" rel="stylesheet" media="all">
+	{# run `npm run-script start` #}
+	<link href="{% if settings.DEBUG %}http://localhost:3000/index.bundle.css{% else %}{{ static('index.bundle.css') }}{% endif %}" rel="stylesheet" media="all">
 </head>
 <body>
 	<div class="all-window">
 		{% block page %}
 		{% endblock page %}
 	</div>
-	<script src="{{ static('vendor.bundle.js') }}"></script>
-	<script src="{{ static('index.bundle.js') }}"></script>
+	<script src="{% if settings.DEBUG %}http://localhost:3000/vendor.bundle.js{% else %}{{ static('vendor.bundle.js') }}{% endif %}"></script>
+	<script src="{% if settings.DEBUG %}http://localhost:3000/index.bundle.js{% else %}{{ static('index.bundle.js') }}{% endif %}"></script>
 
 	<script>
 		{% block javascript %}{% endblock %}

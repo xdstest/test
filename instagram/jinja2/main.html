@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+
+{% block page %}
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<ul class="nav navbar-nav navbar-right">
+				<li><button type="button" class="btn btn-success navbar-btn">Sing up</button></li>
+				<li><a href="{{ url('user-sing-in') }}" type="button" class="btn btn-default navbar-btn">Sing in</a></li>
+			</ul>
+		</div>
+	</nav>
+	<div class="timeline-base container">
+
+	</div>
+{% endblock %}
