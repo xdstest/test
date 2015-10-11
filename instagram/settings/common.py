@@ -98,6 +98,7 @@ TEMPLATES = [
                 'django.core.context_processors.request',
                 'django.contrib.messages.context_processors.messages',
                 'instagram.context_processors.settings',
+                'instagram.context_processors.user',
             ],
             'undefined': 'jinja2.Undefined',
         },

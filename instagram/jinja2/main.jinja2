@@ -4,8 +4,12 @@
 	<nav class="navbar">
 		<div class="container">
 			<ul class="nav navbar-nav navbar-right">
-				{% block navbar_btn_sing_up %}<li><a href="{{ url('user-sing-up') }}" role="button" class="btn btn-success navbar-btn">Sing up</a></li>{% endblock %}
-				{% block navbar_btn_sing_in %}<li><a href="{{ url('user-sing-in') }}" role="button" class="btn btn-default navbar-btn">Sing in</a></li>{% endblock %}
+				{% if user %}
+					{% block navbar_btn_sign_out %}<li><a href="{{ url('user-sign-out') }}" role="button" class="btn btn-default navbar-btn">Sign out</a></li>{% endblock %}
+				{% else %}
+					{% block navbar_btn_sign_up %}<li><a href="{{ url('user-sign-up') }}" role="button" class="btn btn-success navbar-btn">sign up</a></li>{% endblock %}
+					{% block navbar_btn_sign_in %}<li><a href="{{ url('user-sign-in') }}" role="button" class="btn btn-default navbar-btn">sign in</a></li>{% endblock %}
+				{% endif %}
 			</ul>
 		</div>
 	</nav>
