@@ -14,7 +14,7 @@
     "react": "",
     "react-dom": "",
     "react-mixin": "",
-    "react-router": ""
+    "react-router": "^1.0.0-rc3"
   },
   "devDependencies": {
     "autoprefixer-loader": "",
