@@ -15,7 +15,7 @@ class User(AbstractBaseUser, PermissionsMixin):
             validators.RegexValidator(r'^[\w.@+-]+$',
                                       'Enter a valid username. '
                                       'This value may contain only letters, numbers '
-                                      'and @/./+/-/_ characters.'), 'invalid',
+                                      'and @/./+/-/_ characters.', 'invalid'),
         ],
         error_messages={
             'unique': "A user with that username already exists.",
