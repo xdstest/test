@@ -22,6 +22,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'imagekit',
     'django_jinja',
+    'crispy_forms',
     'instagram',
 )
 
@@ -77,11 +78,11 @@ TEMPLATES = [
     {
         'BACKEND': 'django_jinja.backend.Jinja2',
         'NAME': 'jinja',
-        "APP_DIRS": True,
+        'APP_DIRS': True,
         'DIRS': [],
         'OPTIONS': {
             'app_dirname': 'jinja2',
-            'match_extension': '.html',
+            'match_extension': '.jinja2',
             'context_processors': [
                 'django.core.context_processors.csrf',
                 'django.core.context_processors.debug',
