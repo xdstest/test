@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 
+from crispy_forms.utils import render_crispy_form
 from django_jinja import library
+from jinja2 import contextfunction
 from jinja2.filters import do_default
 
-from crispy_forms.templatetags.crispy_forms_filters import as_crispy_form
 
-
-@library.filter
-def crispy(form):
-    return as_crispy_form(form, label_class=form.helper.label_class, field_class=form.helper.field_class)
+@contextfunction
+@library.global_function
+def crispy(context, form):
+    return render_crispy_form(form, context=context)
 
 
 @library.filter
