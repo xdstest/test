@@ -73,6 +73,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static', 'dest')
 
+TESTS_REPORTS_ROOT = os.path.join(BASE_DIR, 'reports')
+
 AUTH_USER_MODEL = 'instagram.User'
 
 STATICFILES_FINDERS = (

@@ -11,6 +11,7 @@
 /instagram/settings/production.py
 /instagram/settings/develop.py
 /media
+/reports
 /static/dest
 /node_modules
 
