@@ -1,15 +1,16 @@
 {% extends 'layout.html' %}
 
 {% block page %}
-	<nav class="navbar navbar-inverse navbar-fixed-top">
+	<nav class="navbar navbar-fixed-top">
 		<div class="container">
 			<ul class="nav navbar-nav navbar-right">
-				<li><button type="button" class="btn btn-success navbar-btn">Sing up</button></li>
-				<li><a href="{{ url('user-sing-in') }}" type="button" class="btn btn-default navbar-btn">Sing in</a></li>
+				{% block navbar_btn_sing_up %}<li><a href="{{ url('user-sing-up') }}" role="button" class="btn btn-success navbar-btn">Sing up</a></li>{% endblock %}
+				{% block navbar_btn_sing_in %}<li><a href="{{ url('user-sing-in') }}" role="button" class="btn btn-default navbar-btn">Sing in</a></li>{% endblock %}
 			</ul>
 		</div>
 	</nav>
 	<div class="timeline-base container">
-
+		{% block content %}
+		{% endblock %}
 	</div>
 {% endblock %}

@@ -3,3 +3,6 @@
     padding-top: 10px;
     padding-bottom: 10px;
 }
+.navbar-nav > li > a.btn-success:hover {
+    background: #449D44;
+}
