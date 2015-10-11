@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>{% block title %}{% endblock %}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="{{ static('index.bundle.css') }}" rel="stylesheet" media="all">
+</head>
+<body>
+	<div class="all-window">
+		{% block page %}
+		{% endblock page %}
+	</div>
+	<script src="{{ static('vendor.bundle.js') }}"></script>
+	<script src="{{ static('index.bundle.js') }}"></script>
+
+	<script>
+		{% block javascript %}{% endblock %}
+	</script>
+</body>
+</html>
