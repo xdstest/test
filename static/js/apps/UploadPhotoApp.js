@@ -1,4 +1,4 @@
-import UploadPhotoForm from './components/UploadPhotoForm';
+import UploadPhotoForm from '../components/UploadPhotoForm';
 import React from 'react';
 import ReactDOM from 'react-dom';
 

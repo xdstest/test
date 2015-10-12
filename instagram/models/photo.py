@@ -71,7 +71,7 @@ class Photo(models.Model):
     )
 
     id = models.AutoField(primary_key=True)
-    caption = models.CharField(max_length=1024, blank=True, null=True, default='')
+    caption = models.TextField(blank=True, null=True, default=None)
     user = models.ForeignKey(User)
     visibility = models.CharField(max_length=32, choices=VISIBILITY_CHOICES, default=VISIBILITY_PUBLIC, db_index=True)
     created = models.DateTimeField(blank=True, null=True, db_index=True, auto_now_add=True)
@@ -101,18 +101,29 @@ class Photo(models.Model):
         return self.photo.name
 
     def delete(self, *args, **kwargs):
-        media_root_dir = os.path.realpath(settings.MEDIA_ROOT)
-        for spec in ['small']:
-            field = getattr(self, '_'.join(('photo', spec)))
-            if field.name:
-                name = os.path.join(media_root_dir, field.name)
-                if os.path.isfile(name) and os.path.exists(name):
-                    os.remove(name)
-        if self.photo:
-            self.photo.delete(save=False)
+        # TODO: replace with django-storages
+        # media_root_dir = os.path.realpath(settings.MEDIA_ROOT)
+        # for spec in ['small']:
+        #     field = getattr(self, '_'.join(('photo', spec)))
+        #     if field.name:
+        #         name = os.path.join(media_root_dir, field.name)
+        #         if os.path.isfile(name) and os.path.exists(name):
+        #             os.remove(name)
+        # if self.photo:
+        #     self.photo.delete(save=False)
         super(Photo, self).delete(*args, **kwargs)
 
+    def _parse_hashtags_from_caption(self):
+        pass
 
-class PhotoHashTags(models.Model):
+    def update_hashtags(self):
+        old_hashtags = {item.tag: item.id for item in self.photohashtag_set.all()}
+
+
+
+class PhotoHashTag(models.Model):
     tag = models.CharField(max_length=255, db_index=True)
     photo = models.ForeignKey(Photo)
+
+    class Meta:
+        unique_together = (('tag', 'photo'),)

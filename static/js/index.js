@@ -1,7 +1,7 @@
 import '../css/index.styl';
 
 // import React from 'react'; window.React = React;
-import UploadPhotoApp from './app/UploadPhotoApp';
+import UploadPhotoApp from './apps/UploadPhotoApp';
 
 window.apps = {
 	UploadPhoto: UploadPhotoApp

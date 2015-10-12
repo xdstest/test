@@ -2,8 +2,9 @@
 
 {% block content %}
 	<div class="i-upload-photo"></div>
+	{{ crispy(form) }}
 {% endblock %}
 
-{% block javascript %}
+{#% block javascript %}
 	window.apps.UploadPhoto();
-{% endblock %}
+{% endblock %#}
