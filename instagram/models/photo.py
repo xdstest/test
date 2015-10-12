@@ -7,7 +7,7 @@ from django.conf import settings
 from django.db import models
 
 from imagekit.models import ProcessedImageField, ImageSpecField
-from pilkit.processors import ResizeToFit, ResizeToFill
+from pilkit.processors import ResizeToFit
 
 from instagram.models.user import User
 
