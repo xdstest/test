@@ -9,7 +9,6 @@ var NODE_ENV = process.env.NODE_ENV;
 var config = {
 	entry: {
 		index: './static/js/index.js',
-		upload_photo: './static/js/upload_photo.js',
 		vendor: ['react', 'react-router', 'flux', 'es6-promise', 'isomorphic-fetch']
 	},
 	output: {

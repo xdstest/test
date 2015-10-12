@@ -1,5 +1,9 @@
 {% extends 'timeline/base_timeline.jinja2' %}
 
 {% block content %}
-	<div class="i-photo-add"></div>
+	<div class="i-upload-photo"></div>
+{% endblock %}
+
+{% block javascript %}
+	window.apps.UploadPhoto();
 {% endblock %}
