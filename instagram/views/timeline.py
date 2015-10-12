@@ -10,3 +10,7 @@ class BaseTimeline(TemplateView):
     def get_context_data(self, **kwargs):
         super(BaseTimeline, self).get_context_data(**kwargs)
         return kwargs
+
+
+class UserTimeline(TemplateView):
+    template_name = 'timeline/user_timeline.jinja2'
