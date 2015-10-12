@@ -120,7 +120,7 @@ class Photo(models.Model):
     def update_tags(self):
         old_tags = {item.tag: item.id for item in self.phototag_set.all()}
         existed_tags = []
-        new_tags = self._parse_hashtags_from_caption(self.caption)
+        new_tags = self._parse_tags_from_caption(self.caption)
 
         # delete old tags
         ids = []

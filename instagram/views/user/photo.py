@@ -16,11 +16,11 @@ class UploadPhoto(LoginRequiredMixin, FormView):
     form_class = UploadPhotoForm
 
     def get_success_url(self):
-        return reverse('timeline-user', self.request.user.username)
+        return reverse('timeline-user', kwargs={'username': self.request.user.username})
 
     def form_valid(self, form):
         photo = form.save(commit=False)
         photo.user = self.request.user
         photo.save()
-        photo.update_hashtags()
+        photo.update_tags()
         return super(UploadPhoto, self).form_valid(form)
