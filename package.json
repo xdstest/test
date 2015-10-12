@@ -5,6 +5,7 @@
   "repository": "",
   "dependencies": {
     "classnames": "",
+    "es6-promise": "",
     "flux": "",
     "history": "",
     "isomorphic-fetch": "",

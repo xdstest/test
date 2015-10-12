@@ -9,7 +9,7 @@ var NODE_ENV = process.env.NODE_ENV;
 var config = {
 	entry: {
 		index: './static/js/index.js',
-		vendor: ['react', 'react-router', 'flux']
+		vendor: ['react', 'react-router', 'flux', 'es6-promise', 'isomorphic-fetch']
 	},
 	output: {
 		path: path.join(__dirname, 'static/dest'),
