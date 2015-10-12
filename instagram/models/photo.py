@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import os
+import re
 from pilkit.lib import Image
 
 from django.conf import settings
@@ -113,15 +113,32 @@ class Photo(models.Model):
         #     self.photo.delete(save=False)
         super(Photo, self).delete(*args, **kwargs)
 
-    def _parse_hashtags_from_caption(self):
-        pass
+    @staticmethod
+    def _parse_tags_from_caption(caption):
+        return set(re.findall(ur'#([\w]+)', caption, re.I + re.U))
 
-    def update_hashtags(self):
-        old_hashtags = {item.tag: item.id for item in self.photohashtag_set.all()}
+    def update_tags(self):
+        old_tags = {item.tag: item.id for item in self.phototag_set.all()}
+        existed_tags = []
+        new_tags = self._parse_hashtags_from_caption(self.caption)
+
+        # delete old tags
+        ids = []
+        for tag, tag_id in old_tags.iteritems():
+            if tag not in new_tags:
+                ids.append(tag_id)
+            else:
+                existed_tags.append(tag)
+        if ids:
+            self.phototag_set.filter(pk__in=ids).delete()
+
+        for tag in new_tags:
+            if tag not in existed_tags:
+                obj = PhotoTag(photo=self, tag=tag)
+                self.phototag_set.add(obj)
 
 
-
-class PhotoHashTag(models.Model):
+class PhotoTag(models.Model):
     tag = models.CharField(max_length=255, db_index=True)
     photo = models.ForeignKey(Photo)
 
