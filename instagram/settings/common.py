@@ -101,6 +101,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'instagram.context_processors.settings',
                 'instagram.context_processors.user',
+                'instagram.context_processors.webpack_dev',
             ],
             'undefined': 'jinja2.Undefined',
         },

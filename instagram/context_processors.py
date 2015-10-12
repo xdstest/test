@@ -13,3 +13,11 @@ def user(request):
     return {
         'user': request.user if request.user.is_authenticated() and request.user.is_active else None,
     }
+
+
+def webpack_dev(request):
+    return {
+        # поддержка webpack
+        'webpack_dev': True if django_settings.DEBUG and 'PhantomJS' not in request.META.get('HTTP_USER_AGENT') \
+            else False
+    }
