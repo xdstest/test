@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+# 6u4FXsk9C<`07Mf
 export DEBIAN_FRONTEND=noninteractive
 
 apt-get update -qq

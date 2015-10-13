@@ -1,10 +1,18 @@
 {% extends 'timeline/base_timeline.jinja2' %}
 
 {% block content %}
-	<div class="i-upload-photo"></div>
-	{{ crispy(form) }}
+	<div class="i-upload-photo col-md-8">
+		<button type="button" class="btn btn-primary btn-lg i-upload-photo__btn">
+			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+			Add
+		</button>
+
+		<div class="i-upload-photo__wrap i-upload-photo__wrap_mod_hidden">
+			{{ crispy(form) }}
+		</div>
+	</div>
 {% endblock %}
 
-{#% block javascript %}
-	window.apps.UploadPhoto();
-{% endblock %#}
+{% block javascript %}
+	window.apps.UploadPhoto(document.getElementsByClassName('i-upload-photo')[0]);
+{% endblock %}

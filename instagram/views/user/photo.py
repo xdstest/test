@@ -3,7 +3,7 @@
 from django.conf import settings
 from django.contrib import auth
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.views.generic import View
 from django.views.generic.edit import FormView
 
@@ -23,4 +23,12 @@ class UploadPhoto(LoginRequiredMixin, FormView):
         photo.user = self.request.user
         photo.save()
         photo.update_tags()
+        if self.request.is_ajax():
+            return HttpResponse(status=204)
         return super(UploadPhoto, self).form_valid(form)
+
+    def form_invalid(self, form):
+        if self.request.is_ajax():
+            return JsonResponse(form.errors, status=400)
+        else:
+            return super(UploadPhoto, self).form_invalid(form)
