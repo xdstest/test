@@ -1,0 +1,9 @@
+{% extends 'main.jinja2' %}
+
+{% block content %}
+	<div class="container-fluid">
+		{% block user_info %}{% endblock %}
+		{% block form %}{% endblock %}
+	</div>
+	{% block timeline %}{% endblock %}
+{% endblock %}

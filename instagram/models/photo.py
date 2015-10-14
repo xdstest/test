@@ -7,7 +7,7 @@ from django.conf import settings
 from django.db import models
 
 from imagekit.models import ProcessedImageField, ImageSpecField
-from pilkit.processors import ResizeToFit
+from pilkit.processors import ResizeToFit, ResizeToFill
 
 from instagram.models.user import User
 
@@ -80,8 +80,19 @@ class Photo(models.Model):
                                 options={'quality': 100, 'progressive': True}, max_length=255)
     width = models.IntegerField(blank=True, default=0)
     height = models.IntegerField(blank=True, default=0)
+    width_photo_full = models.IntegerField(blank=True, default=0)
+    height_photo_full = models.IntegerField(blank=True, default=0)
+
+    photo_full = ImageSpecField(source='photo',
+                                processors=[ResizeToFit(1200, 1200, upscale=False)],
+                                format='JPEG',
+                                options={
+                                    'quality': 70,
+                                    'progressive': True
+                                },
+                                cachefile_strategy='imagekit.cachefiles.strategies.Optimistic')
     photo_timeline = ImageSpecField(source='photo',
-                                    processors=[ResizeToFit(600, 600, upscale=False)],
+                                    processors=[ResizeToFill(300, 300, upscale=False)],
                                     format='JPEG',
                                     options={
                                         'quality': 70,
@@ -89,7 +100,7 @@ class Photo(models.Model):
                                     },
                                     cachefile_strategy='imagekit.cachefiles.strategies.Optimistic')
     photo_timeline_2x = ImageSpecField(source='photo',
-                                       processors=[ResizeToFit(1200, 1200, upscale=False)],
+                                       processors=[ResizeToFit(600, 600, upscale=False)],
                                        format='JPEG',
                                        options={
                                            'quality': 70,
@@ -112,6 +123,15 @@ class Photo(models.Model):
         # if self.photo:
         #     self.photo.delete(save=False)
         super(Photo, self).delete(*args, **kwargs)
+
+    def save(self, *args, **kwargs):
+        super(Photo, self).save(*args, **kwargs)
+        if not all([self.width, self.height]) and self.photo:
+            self.width = self.photo.width
+            self.height = self.photo.height
+            self.width_photo_full = self.photo_full.width
+            self.height_photo_full = self.photo_full.height
+            super(Photo, self).save(*args, **kwargs)
 
     @staticmethod
     def _parse_tags_from_caption(caption):
@@ -149,4 +169,4 @@ class PhotoTag(models.Model):
     def save(self, *args, **kwargs):
         if not self.pk and not self.photo_created and self.photo:
             self.photo_created = self.photo.created
-        super(PhotoTag, self).delete(*args, **kwargs)
+        super(PhotoTag, self).save(*args, **kwargs)

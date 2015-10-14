@@ -43,7 +43,7 @@ let UploadPhotoForm = class {
 		fetch(this.form.getAttribute('action') || window.location.href, {
 			method: this.form.getAttribute('method') || 'post',
 			headers: new Headers({
-				"X-Requested-With": "XMLHttpRequest"
+				'X-Requested-With': 'XMLHttpRequest'
 			}),
 			credentials: 'include',
 			body: new FormData(this.form)

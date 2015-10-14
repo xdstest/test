@@ -10,7 +10,7 @@ from instagram.views.user.photo import UploadPhoto
 
 
 class BaseTimeline(TemplateView):
-    ITEMS_PER_PAGE = 3
+    ITEMS_PER_PAGE = 9
     template_name = 'timeline/base_timeline.jinja2'
 
     def get_context_data(self, **kwargs):
@@ -34,6 +34,7 @@ class UserTimeline(UploadPhoto, BaseTimeline):
         photos = Photo.objects.filter(user=context['timeline_user']).order_by('-created')
         if not context['user_can_edit_photos']:
             photos = photos.exclude(visibility=Photo.VISIBILITY_PRIVATE)
+        context['timeline_user_posts'] = Photo.objects.filter(user=context['timeline_user']).count()
         context['photos'] = photos[:self.ITEMS_PER_PAGE]
         context['form'] = self.get_form()
         return context

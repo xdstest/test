@@ -1,7 +1,14 @@
 {% extends 'timeline/base_timeline.jinja2' %}
 
-{% block content %}
-	<div class="i-upload-photo col-md-8">
+{% block user_info %}
+	<div class="row">
+		<h3 style="margin-top: 0;">{{ timeline_user.username }}</h3>
+		<p><strong>{{ timeline_user_posts }}</strong> post{% if timeline_user_posts > 1 %}s{% endif %}</p>
+	</div>
+{% endblock %}
+
+{% block form %}
+	<div class="i-upload-photo row">
 		<button type="button" class="btn btn-primary btn-lg i-upload-photo__btn">
 			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
 			Add
@@ -14,5 +21,6 @@
 {% endblock %}
 
 {% block javascript %}
+	{{ super() }}
 	window.apps.UploadPhoto(document.getElementsByClassName('i-upload-photo')[0]);
 {% endblock %}

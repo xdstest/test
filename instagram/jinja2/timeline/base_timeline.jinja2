@@ -1,1 +1,17 @@
-{% extends 'main.jinja2' %}
+{% extends 'timeline/main.jinja2' %}
+
+{% block timeline %}
+	<div class="i-timeline">
+		{% for photo in photos %}
+			<div class="i-timeline__item">
+				<div class="i-timeline__item__photo">
+					<img src="{{ photo.photo.url }}" width="100%" height="100%" alt=""
+					     {% if photo.width_photo_full > 300 %}
+					        srcset="{{ photo.photo_timeline.url }} 1x, {{ photo.photo_timeline_2x.url }} 2x"
+					     {% endif %}
+						/>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+{% endblock %}
