@@ -3,6 +3,7 @@
 from django.core import validators
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, UserManager
 from django.db import models
+from django.utils.functional import cached_property
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -37,3 +38,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     def get_short_name(self):
         return self.username
 
+    @cached_property
+    def is_moderator(self):
+        return self.is_active and self.groups.filter(name='moderators').exists()
