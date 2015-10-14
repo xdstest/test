@@ -15,7 +15,7 @@ class BaseTimeline(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = {}
-        context['user_can_edit_photos'] = self.request.user.is_authenticated and self.request.user.is_moderator
+        context['user_can_edit_photos'] = self.request.user.is_authenticated() and self.request.user.is_moderator
         photos = Photo.objects.order_by('-created')
         if not context['user_can_edit_photos']:
             photos = photos.filter(visibility=Photo.VISIBILITY_PUBLIC)
@@ -29,7 +29,7 @@ class UserTimeline(UploadPhoto, BaseTimeline):
     def get_context_data(self, **kwargs):
         context = {}
         context['timeline_user'] = get_object_or_404(User, username=kwargs.get('username'))
-        context['user_can_edit_photos'] = self.request.user.is_authenticated and \
+        context['user_can_edit_photos'] = self.request.user.is_authenticated() and \
                             (self.request.user.is_moderator or self.request.user.id == context['timeline_user'].id)
         photos = Photo.objects.filter(user=context['timeline_user']).order_by('-created')
         if not context['user_can_edit_photos']:
