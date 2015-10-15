@@ -3,7 +3,6 @@
 import re
 from pilkit.lib import Image
 
-from django.conf import settings
 from django.db import models
 
 from imagekit.models import ProcessedImageField, ImageSpecField
@@ -161,12 +160,6 @@ class Photo(models.Model):
 class PhotoTag(models.Model):
     tag = models.CharField(max_length=255, db_index=True)
     photo = models.ForeignKey(Photo)
-    photo_created = models.DateTimeField(db_index=True)
 
     class Meta:
         unique_together = (('tag', 'photo'),)
-
-    def save(self, *args, **kwargs):
-        if not self.pk and not self.photo_created and self.photo:
-            self.photo_created = self.photo.created
-        super(PhotoTag, self).save(*args, **kwargs)
