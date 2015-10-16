@@ -3,6 +3,12 @@
     padding-top: 10px;
     padding-bottom: 10px;
 }
+.navbar-default .navbar-nav > li > a.btn {
+    color: #000;
+}
+.navbar-default .navbar-nav > li > a.btn-success {
+    color: #fff;
+}
 .navbar-nav > li > a.btn-success:hover {
     background: #449D44;
 }
