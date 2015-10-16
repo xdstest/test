@@ -13,6 +13,7 @@
 		{% block page %}
 		{% endblock page %}
 	</div>
+	<script src="{{ static('bootstrap.js') }}"></script>
 	<script src="{% if settings.DEBUG %}http://localhost:3000/vendor.bundle.js{% else %}{{ static('vendor.bundle.js') }}{% endif %}"></script>
 	<script src="{% if settings.DEBUG %}http://localhost:3000/index.bundle.js{% else %}{{ static('index.bundle.js') }}{% endif %}"></script>
 

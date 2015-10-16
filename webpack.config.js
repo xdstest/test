@@ -37,7 +37,7 @@ var config = {
 			test: /\.(otf|eot|jpg|jpeg|png|svg|ttf|woff|woff2)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
 			loader: 'url-loader?limit=8192'
 		}, {
-			test: /\.html$/,
+			test: /\.(html|min\.js)$/,
 			loader: 'file?name=[name].[ext]'
 		}]
 	}

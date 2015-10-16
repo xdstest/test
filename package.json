@@ -15,7 +15,13 @@
     "react": "",
     "react-dom": "",
     "react-mixin": "",
-    "react-router": "^1.0.0-rc3"
+    "react-router": "^1.0.0-rc3",
+    "grunt": "",
+    "grunt-cli": "",
+    "grunt-contrib-clean": "",
+    "grunt-contrib-compress": "",
+    "grunt-contrib-copy": "",
+    "grunt-run": ""
   },
   "devDependencies": {
     "autoprefixer-loader": "",
@@ -34,9 +40,5 @@
     "url-loader": "",
     "webpack": "",
     "webpack-dev-server": ""
-  },
-  "scripts": {
-    "start": "node server.js",
-    "build": "NODE_ENV=production webpack -p"
   }
 }
