@@ -1,26 +1,35 @@
 {% extends 'layout.jinja2' %}
 
 {% block page %}
-	<nav class="navbar">
-		<div class="container">
-			{% if user %}
-				<span class="navbar-brand">Hey, {{ user.username }}!</span>
-			{% endif %}
-			<div class="nav navbar-nav navbar-left">
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+				        aria-expanded="false" aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<span class="navbar-brand">{% if user %}Hey, {{ user.username }}!{% endif %}</span>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
-					<li><a href="/">Home</a></li>
+					<li><a href="#">Home</a></li>
 					{% if user %}<li><a href="{{ url('timeline-user', username=user.username) }}">My timeline</a></li>{% endif %}
 				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					{% if user %}
+						{% block navbar_btn_sign_out %}<li><a href="{{ url('user-sign-out') }}" role="button" class="btn btn-default navbar-btn">Sign out</a></li>{% endblock %}
+					{% else %}
+						{% block navbar_btn_sign_up %}<li><a href="{{ url('user-sign-up') }}" role="button" class="btn btn-success navbar-btn">sign up</a></li>{% endblock %}
+						{% block navbar_btn_sign_in %}<li><a href="{{ url('user-sign-in') }}" role="button" class="btn btn-default navbar-btn">sign in</a></li>{% endblock %}
+					{% endif %}
+				</ul>
 			</div>
-			<ul class="nav navbar-nav navbar-right">
-				{% if user %}
-					{% block navbar_btn_sign_out %}<li><a href="{{ url('user-sign-out') }}" role="button" class="btn btn-default navbar-btn">Sign out</a></li>{% endblock %}
-				{% else %}
-					{% block navbar_btn_sign_up %}<li><a href="{{ url('user-sign-up') }}" role="button" class="btn btn-success navbar-btn">sign up</a></li>{% endblock %}
-					{% block navbar_btn_sign_in %}<li><a href="{{ url('user-sign-in') }}" role="button" class="btn btn-default navbar-btn">sign in</a></li>{% endblock %}
-				{% endif %}
-			</ul>
+			<!--/.nav-collapse -->
 		</div>
+		<!--/.container-fluid -->
 	</nav>
 	<div class="container">
 		{% block content %}{% endblock %}
