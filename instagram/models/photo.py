@@ -161,11 +161,11 @@ class Photo(models.Model):
             'id': self.id,
             'caption': self.caption,
             'visibility': self.visibility,
-            'photo_full': self.photo_full.url,
-            'photo_full_width': self.width_photo_full,
-            'photo_full_height': self.height_photo_full,
-            'photo_timeline': self.photo_timeline.url,
-            'photo_timeline_2x': self.photo_timeline_2x.url,
+            'photo_full_url': self.photo_full.url,
+            'width_photo_full': self.width_photo_full,
+            'height_photo_full': self.height_photo_full,
+            'photo_timeline_url': self.photo_timeline.url,
+            'photo_timeline_2x_url': self.photo_timeline_2x.url,
         }
 
 

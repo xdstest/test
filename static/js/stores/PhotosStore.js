@@ -28,6 +28,10 @@ class _PhotosStore extends EventEmitter {
 		return this.photos;
 	}
 
+	reset() {
+		this.photos = [];
+	}
+
 	addPhotos(photos) {
 		photos.forEach(photo => {
 			if (!this.photos[photo.id]) {
@@ -43,7 +47,8 @@ let PhotosStore = new _PhotosStore();
 
 PhotosStore.dispatchToken = GalleryAppDispatcher.register(action => {
 	switch (action.type) {
-	case ActionTypes.CREATE_MESSAGE:
+	case ActionTypes.RECEIVE_INIT_PHOTOS:
+		PhotosStore.reset();
 		PhotosStore.addPhotos(action.photos);
 		PhotosStore.emitChange();
 		break;
