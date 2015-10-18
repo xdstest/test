@@ -6,11 +6,10 @@ import GalleryAppDispatcher from '../dispatcher/GalleryAppDispatcher';
 const CHANGE_EVENT = 'change';
 
 class _PhotosStore extends EventEmitter {
-
 	constructor() {
 		super();
 		this.photos = [];
-		this.photos_ids = [];
+		this.photosIds = [];
 	}
 
 	emitChange() {
@@ -31,12 +30,12 @@ class _PhotosStore extends EventEmitter {
 
 	reset() {
 		this.photos = [];
-		this.photos_ids = [];
+		this.photosIds = [];
 	}
 
 	addPhotos(photos) {
 		photos.forEach(photo => {
-			if (this.photos_ids.indexOf(photo.id) === -1) {
+			if (this.photosIds.indexOf(photo.id) === -1) {
 				this.photos.push(photo);
 			}
 		});
