@@ -65,7 +65,7 @@ class BaseTimeline(TemplateView):
             offset = int(self.request.GET.get('offset', 0))
         except (TypeError, ValueError):
             offset = 0
-        photos = context['photos'][offset:self.ITEMS_PER_PAGE]
+        photos = context['photos'][offset:(offset + self.ITEMS_PER_PAGE)]
         return {
             'photos': [photo.as_dict() for photo in photos]
         }
@@ -85,7 +85,7 @@ class UserTimeline(UploadPhoto, BaseTimeline):
         photos = self._photos_set(**kwargs).filter(user=context['timeline_user'])
         if not context['user_can_edit_photos']:
             photos = photos.exclude(visibility=Photo.VISIBILITY_PRIVATE)
-        context['photos'] = photos.order_by('-created')[:self.ITEMS_PER_PAGE]
+        context['photos'] = photos.order_by('-created')
 
     def get_context_data(self, **kwargs):
         context = {}
