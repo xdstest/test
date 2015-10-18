@@ -6,8 +6,9 @@ import React, { Component, PropTypes } from 'react';
 import GalleryApiActions from '../actions/GalleryApiActions';
 import PhotosStore from '../stores/PhotosStore';
 
-import PhotosList from '../components/PhotosList';
 import Button from '../components/Button';
+import PhotoDialog from '../containers/PhotoDialog';
+import PhotosList from '../components/PhotosList';
 
 promosePolyfill();
 
@@ -18,12 +19,14 @@ class Gallery extends Component {
 		this.state = {
 			showLoadMoreButton: true,
 			canLoadMore: true,
-			isFetching: false
+			isFetching: false,
+			photoInDialog: null
 		};
 
 		this.onScroll = debounce(this.onScroll.bind(this), 200);
 		this.clickLoadMore = this.clickLoadMore.bind(this);
-		this.photoOnClick = this.photoOnClick.bind(this);
+		this.photoShow = this.photoShow.bind(this);
+		this.photoClose = this.photoClose.bind(this);
 	}
 
 	componentDidMount() {
@@ -94,8 +97,16 @@ class Gallery extends Component {
 		});
 	}
 
-	photoOnClick(photo) {
-		console.log(photo);
+	photoShow(photo) {
+		this.setState({
+			photoInDialog: photo
+		});
+	}
+
+	photoClose() {
+		this.setState({
+			photoInDialog: null
+		});
 	}
 
 	render() {
@@ -114,9 +125,17 @@ class Gallery extends Component {
 			);
 		}
 
+		let contentPhotoDialog = '';
+		if (this.state.photoInDialog) {
+			contentPhotoDialog = (
+				<PhotoDialog photo={this.state.photoInDialog} onClose={this.photoClose} />
+			);
+		}
+
 		return (
 			<div>
-				<PhotosList photoOnClick={this.photoOnClick} />
+				<PhotosList photoOnClick={this.photoShow} />
+				{contentPhotoDialog}
 				{contentButtonLoadMore}
 			</div>
 		);

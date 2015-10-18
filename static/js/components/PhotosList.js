@@ -56,3 +56,4 @@ PhotosList.propTypes = {
 };
 
 export default PhotosList;
+
