@@ -54,6 +54,11 @@ PhotosStore.dispatchToken = GalleryAppDispatcher.register(action => {
 		PhotosStore.emitChange();
 		break;
 
+	case ActionTypes.RECEIVE_PHOTOS:
+		PhotosStore.addPhotos(action.photos);
+		PhotosStore.emitChange();
+		break;
+
 	default:
 		// do nothing
 	}

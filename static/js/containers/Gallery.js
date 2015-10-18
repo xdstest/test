@@ -63,6 +63,10 @@ class Gallery extends Component {
 			}),
 			credentials: 'include'
 		}).then(response => {
+			this.setState({
+				isFetching: false
+			});
+
 			if (response.headers.get('content-type') === 'application/json') {
 				return response.json().then(json => {
 					if (!json.photos) {
