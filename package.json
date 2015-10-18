@@ -5,6 +5,7 @@
   "repository": "",
   "dependencies": {
     "classnames": "",
+    "dialog-polyfill": "",
     "es6-promise": "",
     "flux": "",
     "history": "",

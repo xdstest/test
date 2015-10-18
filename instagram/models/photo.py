@@ -156,6 +156,18 @@ class Photo(models.Model):
                 obj = PhotoTag(photo=self, tag=tag)
                 self.phototag_set.add(obj)
 
+    def as_dict(self):
+        return {
+            'id': self.id,
+            'caption': self.caption,
+            'visibility': self.visibility,
+            'photo_full': self.photo_full.url,
+            'photo_full_width': self.width_photo_full,
+            'photo_full_height': self.height_photo_full,
+            'photo_timeline': self.photo_timeline.url,
+            'photo_timeline_2x': self.photo_timeline_2x.url,
+        }
+
 
 class PhotoTag(models.Model):
     tag = models.CharField(max_length=255, db_index=True)

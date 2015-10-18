@@ -15,3 +15,8 @@
 		{% endfor %}
 	</div>
 {% endblock %}
+
+{% block javascript %}
+	{{ super() }}
+	window.apps.Gallery({{ gallery_data|safe }});
+{% endblock %}

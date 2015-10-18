@@ -1,8 +1,10 @@
 import '../css/index.styl';
 
 // import React from 'react'; window.React = React;
-import UploadPhotoApp from './apps/UploadPhotoApp';
+import UploadPhoto from './apps/UploadPhoto';
+import Gallery from './apps/Gallery';
 
 window.apps = {
-	UploadPhoto: UploadPhotoApp
+	UploadPhoto: UploadPhoto,
+	Gallery: Gallery
 };

@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 
+import json
+
 from django.http import Http404
 from django.shortcuts import get_object_or_404
-from django.views.generic import View, TemplateView
-from django.views.generic.base import ContextMixin
+from django.views.generic import TemplateView
 
 
 from instagram.models import User, Photo
@@ -28,6 +29,15 @@ class BaseTimeline(TemplateView):
     def _photos_set(self, **kwargs):
         return Photo.objects
 
+    def gallery_json_data(self, context):
+        gallery_data = {
+            'userCanEditPhotos': context['user_can_edit_photos'],
+            'apiEndpoint': '/api' + self.request.path,
+            'photos': [photo.as_dict() for photo in context['photos']]
+        }
+        context['gallery_data'] = json.dumps(gallery_data, ensure_ascii=False)
+
+
     def get_context_data(self, **kwargs):
         context = {}
         context['user_can_edit_photos'] = self.request.user.is_authenticated() and self.request.user.is_moderator
@@ -35,6 +45,7 @@ class BaseTimeline(TemplateView):
         if not context['user_can_edit_photos']:
             photos = photos.filter(visibility=Photo.VISIBILITY_PUBLIC)
         context['photos'] = photos.order_by('-created')[:self.ITEMS_PER_PAGE]
+        self.gallery_json_data(context)
         return context
 
 
@@ -56,6 +67,7 @@ class UserTimeline(UploadPhoto, BaseTimeline):
         context['timeline_user_posts'] = Photo.objects.filter(user=context['timeline_user']).count()
         context['photos'] = photos.order_by('-created')[:self.ITEMS_PER_PAGE]
         context['form'] = self.get_form()
+        self.gallery_json_data(context)
         return context
 
 
