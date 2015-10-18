@@ -37,7 +37,13 @@ class Gallery extends Component {
 		if (this.state.showLoadMoreButton) {
 			return;
 		}
-		console.log(event);
+
+		if (!this.state.isFetching) {
+			let y = document.body.offsetHeight - (window.pageYOffset + window.innerHeight);
+			if (y < 300) {
+				this.fetchPhotos();
+			}
+		}
 	}
 
 	clickLoadMore() {
@@ -69,7 +75,7 @@ class Gallery extends Component {
 
 			if (response.headers.get('content-type') === 'application/json') {
 				return response.json().then(json => {
-					if (!json.photos) {
+					if (!json.photos.length) {
 						this.setState({
 							canLoadMore: false
 						});
