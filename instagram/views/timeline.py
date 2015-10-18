@@ -2,7 +2,7 @@
 
 import json
 
-from django.http import Http404
+from django.http import JsonResponse, Http404
 from django.shortcuts import get_object_or_404
 from django.views.generic import TemplateView
 
@@ -26,14 +26,27 @@ class BaseTimeline(TemplateView):
     ITEMS_PER_PAGE = 9
     template_name = 'timeline/base_timeline.jinja2'
 
+    def dispatch(self, request, *args, **kwargs):
+        if kwargs.get('type') == 'api':
+            return getattr(self, 'get_api')(request, *args, **kwargs)
+        else:
+            return super(BaseTimeline, self).dispatch(request, *args, **kwargs)
+
+    def get_api(self, request, *args, **kwargs):
+        context = self.get_context_data(**kwargs)
+        photos = context['photos'][:self.ITEMS_PER_PAGE]
+        return JsonResponse({
+            'photos': photo.as_dict() for photo in photos
+        })
+
     def _photos_set(self, **kwargs):
         return Photo.objects
 
-    def get_context_photos_data(self, context, **kwargs):
+    def get_context_photos_qs(self, context, **kwargs):
         photos = self._photos_set(**kwargs)
         if not context['user_can_edit_photos']:
             photos = photos.filter(visibility=Photo.VISIBILITY_PUBLIC)
-        return photos.order_by('-created')[:self.ITEMS_PER_PAGE]
+        return photos.order_by('-created')
 
     def get_context_gallery_json_data(self, context, **kwargs):
         gallery_data = {
@@ -49,7 +62,7 @@ class BaseTimeline(TemplateView):
     def get_context_data(self, **kwargs):
         context = {}
         context['user_can_edit_photos'] = self.get_context_user_can_edit_photos(context, **kwargs)
-        context['photos'] = self.get_context_photos_data(context, **kwargs)
+        context['photos'] = self.get_context_photos_qs(context, **kwargs)[:self.ITEMS_PER_PAGE]
         context['gallery_data'] = self.get_context_gallery_json_data(context, **kwargs)
         return context
 
@@ -61,7 +74,7 @@ class TagTimeline(TagTimelineMixin, BaseTimeline):
 class UserTimeline(UploadPhoto, BaseTimeline):
     template_name = 'timeline/user_timeline.jinja2'
 
-    def get_context_photos_data(self, context, **kwargs):
+    def get_context_photos_qs(self, context, **kwargs):
         photos = self._photos_set(**kwargs).filter(user=context['timeline_user'])
         if not context['user_can_edit_photos']:
             photos = photos.exclude(visibility=Photo.VISIBILITY_PRIVATE)
@@ -78,7 +91,7 @@ class UserTimeline(UploadPhoto, BaseTimeline):
         context['form'] = self.get_form()
 
         context['user_can_edit_photos'] = self.get_context_user_can_edit_photos(context, **kwargs)
-        context['photos'] = self.get_context_photos_data(context, **kwargs)
+        context['photos'] = self.get_context_photos_qs(context, **kwargs)[:self.ITEMS_PER_PAGE]
         context['gallery_data'] = self.get_context_gallery_json_data(context, **kwargs)
 
         return context
