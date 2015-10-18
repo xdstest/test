@@ -6,7 +6,7 @@ import React, { Component, PropTypes } from 'react';
 import GalleryApiActions from '../actions/GalleryApiActions';
 import PhotosStore from '../stores/PhotosStore';
 
-import PhotosList from './PhotosList';
+import PhotosList from '../components/PhotosList';
 import Button from '../components/Button';
 
 promosePolyfill();
@@ -23,6 +23,7 @@ class Gallery extends Component {
 
 		this.onScroll = debounce(this.onScroll.bind(this), 200);
 		this.clickLoadMore = this.clickLoadMore.bind(this);
+		this.photoOnClick = this.photoOnClick.bind(this);
 	}
 
 	componentDidMount() {
@@ -81,7 +82,7 @@ class Gallery extends Component {
 						});
 					}
 					GalleryApiActions.recivePhotos(json.photos);
-					setTimeout(this.onScroll, 500);
+					this.onScroll();
 				});
 			} else {
 				let error = new Error(response.statusText);
@@ -91,6 +92,10 @@ class Gallery extends Component {
 		}).catch(err => {
 			alert(err);
 		});
+	}
+
+	photoOnClick(photo) {
+		console.log(photo);
 	}
 
 	render() {
@@ -111,7 +116,7 @@ class Gallery extends Component {
 
 		return (
 			<div>
-				<PhotosList />
+				<PhotosList photoOnClick={this.photoOnClick} />
 				{contentButtonLoadMore}
 			</div>
 		);

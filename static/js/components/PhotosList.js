@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 
 import PhotosStore from '../stores/PhotosStore';
 
@@ -11,7 +11,7 @@ class PhotosList extends Component {
 			photos: PhotosStore.getAll()
 		};
 		this.onChange = this.onChange.bind(this);
-		this.photoClick = this.photoClick.bind(this);
+		this.photoOnClick = this.photoOnClick.bind(this);
 	}
 
 	componentDidMount() {
@@ -28,8 +28,10 @@ class PhotosList extends Component {
 		});
 	}
 
-	photoClick(photo) {
-		console.log(photo);
+	photoOnClick(photo) {
+		if (typeof this.props.photoOnClick === 'function') {
+			return this.props.photoOnClick(photo);
+		}
 	}
 
 	render() {
@@ -37,7 +39,7 @@ class PhotosList extends Component {
 
 		content = this.state.photos.map(photo => {
 			return (
-				<PhotoItem key={photo.id} photo={photo} onClick={this.photoClick} />
+				<PhotoItem key={photo.id} photo={photo} onClick={this.photoOnClick} />
 			);
 		});
 
@@ -48,5 +50,9 @@ class PhotosList extends Component {
 		);
 	}
 }
+
+PhotosList.propTypes = {
+	photoOnClick: PropTypes.func
+};
 
 export default PhotosList;
