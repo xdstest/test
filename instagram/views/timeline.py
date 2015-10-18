@@ -23,34 +23,25 @@ class TagTimelineMixin(object):
 
 
 class BaseTimeline(TemplateView):
-    ITEMS_PER_PAGE = 9
+    ITEMS_PER_PAGE = 3
     template_name = 'timeline/base_timeline.jinja2'
 
     def dispatch(self, request, *args, **kwargs):
         if kwargs.get('type') == 'api':
-            return getattr(self, 'get_api')(request, *args, **kwargs)
+            context = self.get_context_data_api(**kwargs)
+            return JsonResponse(context)
         else:
             return super(BaseTimeline, self).dispatch(request, *args, **kwargs)
-
-    def get_api(self, request, *args, **kwargs):
-        context = self.get_context_data(**kwargs)
-        try:
-            offset = int(self.request.GET.get('offset', 0))
-        except (TypeError, ValueError):
-            offset = 0
-        photos = context['photos'][offset:self.ITEMS_PER_PAGE]
-        return JsonResponse({
-            'photos': photo.as_dict() for photo in photos
-        })
 
     def _photos_set(self, **kwargs):
         return Photo.objects
 
-    def get_context_photos_qs(self, context, **kwargs):
+    def fill_context_photos_data(self, context, **kwargs):
+        context['user_can_edit_photos'] = self.request.user.is_authenticated() and self.request.user.is_moderator
         photos = self._photos_set(**kwargs)
         if not context['user_can_edit_photos']:
             photos = photos.filter(visibility=Photo.VISIBILITY_PUBLIC)
-        return photos.order_by('-created')
+        context['photos'] = photos.order_by('-created')
 
     def get_context_gallery_json_data(self, context, **kwargs):
         gallery_data = {
@@ -60,15 +51,24 @@ class BaseTimeline(TemplateView):
         }
         return json.dumps(gallery_data, ensure_ascii=False)
 
-    def get_context_user_can_edit_photos(self, context, **kwargs):
-        return self.request.user.is_authenticated() and self.request.user.is_moderator
-
     def get_context_data(self, **kwargs):
         context = {}
-        context['user_can_edit_photos'] = self.get_context_user_can_edit_photos(context, **kwargs)
-        context['photos'] = self.get_context_photos_qs(context, **kwargs)[:self.ITEMS_PER_PAGE]
+        self.fill_context_photos_data(context, **kwargs)
+        context['photos'] = context['photos'][:self.ITEMS_PER_PAGE]
         context['gallery_data'] = self.get_context_gallery_json_data(context, **kwargs)
         return context
+
+    def get_context_data_api(self, **kwargs):
+        context = {}
+        self.fill_context_photos_data(context, **kwargs)
+        try:
+            offset = int(self.request.GET.get('offset', 0))
+        except (TypeError, ValueError):
+            offset = 0
+        photos = context['photos'][offset:self.ITEMS_PER_PAGE]
+        return {
+            'photos': [photo.as_dict() for photo in photos]
+        }
 
 
 class TagTimeline(TagTimelineMixin, BaseTimeline):
@@ -78,26 +78,22 @@ class TagTimeline(TagTimelineMixin, BaseTimeline):
 class UserTimeline(UploadPhoto, BaseTimeline):
     template_name = 'timeline/user_timeline.jinja2'
 
-    def get_context_photos_qs(self, context, **kwargs):
+    def fill_context_photos_data(self, context, **kwargs):
+        context['timeline_user'] = get_object_or_404(User, username=kwargs.get('username'))
+        context['user_can_edit_photos'] = self.request.user.is_authenticated() and (
+            self.request.user.is_moderator or self.request.user.id == context['timeline_user'].id)
         photos = self._photos_set(**kwargs).filter(user=context['timeline_user'])
         if not context['user_can_edit_photos']:
             photos = photos.exclude(visibility=Photo.VISIBILITY_PRIVATE)
-        return photos.order_by('-created')[:self.ITEMS_PER_PAGE]
-
-    def get_context_user_can_edit_photos(self, context, **kwargs):
-        return self.request.user.is_authenticated() and (
-            self.request.user.is_moderator or self.request.user.id == context['timeline_user'].id)
+        context['photos'] = photos.order_by('-created')[:self.ITEMS_PER_PAGE]
 
     def get_context_data(self, **kwargs):
         context = {}
-        context['timeline_user'] = get_object_or_404(User, username=kwargs.get('username'))
+        self.fill_context_photos_data(context, **kwargs)
+        context['photos'] = context['photos'][:self.ITEMS_PER_PAGE]
         context['timeline_user_posts'] = Photo.objects.filter(user=context['timeline_user']).count()
         context['form'] = self.get_form()
-
-        context['user_can_edit_photos'] = self.get_context_user_can_edit_photos(context, **kwargs)
-        context['photos'] = self.get_context_photos_qs(context, **kwargs)[:self.ITEMS_PER_PAGE]
         context['gallery_data'] = self.get_context_gallery_json_data(context, **kwargs)
-
         return context
 
 

@@ -7,5 +7,12 @@ export default {
 			type: ActionTypes.RECEIVE_INIT_PHOTOS,
 			photos: photos
 		});
+	},
+
+	recivePhotos: function (photos) {
+		GalleryAppDispatcher.dispatch({
+			type: ActionTypes.RECEIVE_PHOTOS,
+			photos: photos
+		});
 	}
 };
