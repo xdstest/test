@@ -1,38 +1,45 @@
 import React, { Component, PropTypes } from 'react';
 
+import PhotosStore from '../stores/PhotosStore';
+
 class PhotosList extends Component {
-	//constructor(props) {
-	//	super(props);
-	//	this.state = {photos: props.initialCount};
-	//}
-	//
-	//render() {
-	//	let content;
-	//	const { photos } = this.props;
-	//
-	//	if (flats.isFetching) {
-	//		content = (
-	//			<li className="objects-list__more objects-list__more_mod_older objects-list__more_mod_wait">
-	//				<div id="spinner"></div>
-	//			</li>
-	//		);
-	//	} else {
-	//		content = flats.items.map(flat => {
-	//			return (
-	//				<FlatsListItem key={flat.id} currency={currency} flat={flat} staticURL={staticURL}/>
-	//			);
-	//		});
-	//	}
-	//
-	//	return (
-	//		<ul id="objects" className="objects-list">
-	//			{content}
-	//		</ul>
-	//	);
-	//}
+	constructor(props) {
+		super(props);
+		this.state = {
+			photos: PhotosStore.getAll()
+		};
+		this.onChange = this.onChange.bind(this);
+	}
+
+	componentDidMount() {
+		PhotosStore.addChangeListener(this.onChange);
+	}
+
+	componentWillUnmount() {
+		PhotosStore.removeChangeListener(this.onChange);
+	}
+
+	onChange() {
+		this.setState({
+			photos: PhotosStore.getAll()
+		});
+	}
+
 	render() {
-		<div></div>
-	};
+		let content;
+
+		//content = flats.items.map(flat => {
+		//	return (
+		//		<FlatsListItem key={flat.id} currency={currency} flat={flat} staticURL={staticURL}/>
+		//	);
+		//});
+
+		return (
+			<div className="i-timeline">
+				{content}
+			</div>
+		);
+	}
 }
 
 export default PhotosList;

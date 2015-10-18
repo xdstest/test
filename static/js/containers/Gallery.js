@@ -19,8 +19,6 @@ class Gallery extends Component {
 	}
 
 	render() {
-		console.log('Gallery.render()', this.props);
-
 		return (
 			<PhotosList />
 		);
@@ -31,6 +29,6 @@ Gallery.propTypes = {
 	userCanEditPhotos: PropTypes.bool.isRequired,
 	apiEndpoint: PropTypes.string.isRequired
 };
-Counter.defaultProps = {userCanEditPhotos: false};
+Gallery.defaultProps = {userCanEditPhotos: false};
 
 export default Gallery;
