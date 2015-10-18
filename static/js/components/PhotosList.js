@@ -2,6 +2,8 @@ import React, { Component, PropTypes } from 'react';
 
 import PhotosStore from '../stores/PhotosStore';
 
+import PhotoItem from '../components/PhotoItem';
+
 class PhotosList extends Component {
 	constructor(props) {
 		super(props);
@@ -28,11 +30,11 @@ class PhotosList extends Component {
 	render() {
 		let content;
 
-		//content = flats.items.map(flat => {
-		//	return (
-		//		<FlatsListItem key={flat.id} currency={currency} flat={flat} staticURL={staticURL}/>
-		//	);
-		//});
+		content = this.state.photos.map(photo => {
+			return (
+				<PhotoItem key={photo.id} photo={photo} />
+			);
+		});
 
 		return (
 			<div className="i-timeline">

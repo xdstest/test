@@ -39,7 +39,7 @@ class _PhotosStore extends EventEmitter {
 
 _PhotosStore.dispatchToken = null;
 
-let PhotosStore = new PhotosStore();
+let PhotosStore = new _PhotosStore();
 
 PhotosStore.dispatchToken = GalleryAppDispatcher.register(action => {
 	switch (action.type) {

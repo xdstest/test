@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 
+import PhotosList from '../components/PhotosList';
+
 class Gallery extends Component {
 	constructor(props) {
 		super(props);
