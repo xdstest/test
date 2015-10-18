@@ -11,6 +11,7 @@ class PhotosList extends Component {
 			photos: PhotosStore.getAll()
 		};
 		this.onChange = this.onChange.bind(this);
+		this.photoClick = this.photoClick.bind(this);
 	}
 
 	componentDidMount() {
@@ -27,12 +28,16 @@ class PhotosList extends Component {
 		});
 	}
 
+	photoClick(photo) {
+		console.log(photo);
+	}
+
 	render() {
 		let content;
 
 		content = this.state.photos.map(photo => {
 			return (
-				<PhotoItem key={photo.id} photo={photo} />
+				<PhotoItem key={photo.id} photo={photo} onClick={this.photoClick} />
 			);
 		});
 

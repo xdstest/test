@@ -1,6 +1,17 @@
 import React, { Component, PropTypes } from 'react';
 
 class PhotoItem extends Component {
+	constructor(props) {
+		super(props);
+		this.onClick = this.onClick.bind(this);
+	}
+
+	onClick() {
+		if (typeof this.props.onClick) {
+			return this.props.onClick(this);
+		}
+	}
+
 	render() {
 		let photo = this.props.photo;
 		let srcSet;
@@ -10,7 +21,8 @@ class PhotoItem extends Component {
 		return (
 			<div className="i-timeline__item">
 				<div className="i-timeline__item__photo">
-					<img src={photo.photo_timeline_url} width="100%" height="100%" alt="" srcSet={srcSet} />
+					<img src={photo.photo_timeline_url} width="100%" height="100%" alt="" srcSet={srcSet}
+						onClick={this.onClick} />
 				</div>
 			</div>
 			);
@@ -18,7 +30,8 @@ class PhotoItem extends Component {
 }
 
 PhotoItem.propTypes = {
-	photo: PropTypes.object.isRequired
+	photo: PropTypes.object.isRequired,
+	onClick: PropTypes.func
 };
 
 export default PhotoItem;

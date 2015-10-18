@@ -6,7 +6,7 @@ import React, { Component, PropTypes } from 'react';
 import GalleryApiActions from '../actions/GalleryApiActions';
 import PhotosStore from '../stores/PhotosStore';
 
-import PhotosList from '../components/PhotosList';
+import PhotosList from './PhotosList';
 import Button from '../components/Button';
 
 promosePolyfill();
