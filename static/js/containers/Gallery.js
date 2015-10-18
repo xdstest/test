@@ -1,3 +1,4 @@
+import {debounce} from 'lodash/function';
 import React, { Component, PropTypes } from 'react';
 
 import PhotosList from '../components/PhotosList';
@@ -6,7 +7,12 @@ import Button from '../components/Button';
 class Gallery extends Component {
 	constructor(props) {
 		super(props);
-		this.onScroll = this.onScroll.bind(this);
+
+		this.state = {
+			showLoadMoreButton: true
+		};
+
+		this.onScroll = debounce(this.onScroll.bind(this), 200);
 		this.clickLoadMore = this.clickLoadMore.bind(this);
 	}
 
@@ -19,20 +25,31 @@ class Gallery extends Component {
 	}
 
 	onScroll(event) {
+		if (this.state.showLoadMoreButton) {
+			return;
+		}
 		console.log(event);
 	}
 
 	clickLoadMore() {
-		console.log(this);
+		this.setState({
+			showLoadMoreButton: false
+		});
 	}
 
 	render() {
-		return (
-			<div>
-				<PhotosList />
+		let contentButtonLoadMore = '';
+		if (this.state.showLoadMoreButton) {
+			contentButtonLoadMore = (
 				<div className="i-timeline__load-more">
 					<Button text="Load more" onClick={this.clickLoadMore} btnClass="btn-default btn-lg" />
 				</div>
+			);
+		}
+		return (
+			<div>
+				<PhotosList />
+				{contentButtonLoadMore}
 			</div>
 		);
 	}

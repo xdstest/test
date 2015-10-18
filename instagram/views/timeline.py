@@ -34,7 +34,11 @@ class BaseTimeline(TemplateView):
 
     def get_api(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
-        photos = context['photos'][:self.ITEMS_PER_PAGE]
+        try:
+            offset = int(self.request.GET.get('offset', 0))
+        except (TypeError, ValueError):
+            offset = 0
+        photos = context['photos'][offset:self.ITEMS_PER_PAGE]
         return JsonResponse({
             'photos': photo.as_dict() for photo in photos
         })
