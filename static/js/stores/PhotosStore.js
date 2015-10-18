@@ -10,6 +10,7 @@ class _PhotosStore extends EventEmitter {
 	constructor() {
 		super();
 		this.photos = [];
+		this.photos_ids = [];
 	}
 
 	emitChange() {
@@ -30,12 +31,13 @@ class _PhotosStore extends EventEmitter {
 
 	reset() {
 		this.photos = [];
+		this.photos_ids = [];
 	}
 
 	addPhotos(photos) {
 		photos.forEach(photo => {
-			if (!this.photos[photo.id]) {
-				this.photos[photo.id] = photo;
+			if (this.photos_ids.indexOf(photo.id) === -1) {
+				this.photos.push(photo);
 			}
 		});
 	}
