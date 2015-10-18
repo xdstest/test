@@ -81,6 +81,7 @@ class Gallery extends Component {
 						});
 					}
 					GalleryApiActions.recivePhotos(json.photos);
+					setTimeout(this.onScroll, 500);
 				});
 			} else {
 				let error = new Error(response.statusText);

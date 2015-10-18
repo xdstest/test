@@ -23,7 +23,7 @@ class TagTimelineMixin(object):
 
 
 class BaseTimeline(TemplateView):
-    ITEMS_PER_PAGE = 9
+    ITEMS_PER_PAGE = 3
     template_name = 'timeline/base_timeline.jinja2'
 
     def dispatch(self, request, *args, **kwargs):
