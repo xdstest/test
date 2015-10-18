@@ -14,6 +14,6 @@ export default function (options) {
 
 	ReactDOM.render(
 		<Gallery apiEndpoint={options.apiEndpoint} userCanEditPhotos={options.userCanEditPhotos} />,
-		document.getElementsByClassName('i-timeline')[0]
+		document.getElementsByClassName('i-timeline__wrap')[0]
 	);
 }

@@ -31,5 +31,6 @@ Gallery.propTypes = {
 	userCanEditPhotos: PropTypes.bool.isRequired,
 	apiEndpoint: PropTypes.string.isRequired
 };
+Counter.defaultProps = {userCanEditPhotos: false};
 
 export default Gallery;
