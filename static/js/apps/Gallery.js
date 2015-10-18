@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 
 import GalleryApiActions from '../actions/GalleryApiActions';
 
+import Gallery from '../containers/Gallery';
+
 export default function (options) {
 	if (!options.photos) {
 		return;
@@ -11,7 +13,7 @@ export default function (options) {
 	GalleryApiActions.reciveInitPhotos(options.photos);
 
 	ReactDOM.render(
-		<Gallery />,
+		<Gallery apiEndpoint={options.apiEndpoint} userCanEditPhotos={options.userCanEditPhotos} />,
 		document.getElementsByClassName('i-timeline')[0]
 	);
 }
