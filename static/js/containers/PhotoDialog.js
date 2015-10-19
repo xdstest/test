@@ -10,7 +10,7 @@ class PhotoDialog extends Component {
 	}
 
 	componentDidMount() {
-		this.dialog = document.getElementsByClassName('i-dialog-photo')[0];
+		this.dialog = document.getElementsByClassName('i-dialog-photo__wrap')[0];
 		if (!this.dialog.showModal) {
 			window.dialogPolyfill.registerDialog(this.dialog);
 		}
@@ -37,12 +37,12 @@ class PhotoDialog extends Component {
 	render() {
 		let photo = this.props.photo;
 		return (
-			<dialog>
+			<dialog className="i-dialog-photo__wrap">
 				<div className="i-dialog-photo">
 					<div className="i-dialog-photo__image">
 						<img src={photo.photo_full_url} width="100%" height="100%" alt="" />
 					</div>
-					<div class="i-dialog-photo__caption">
+					<div className="i-dialog-photo__caption">
 						<h3><a href={photo.user_url}>{photo.user_username}</a></h3>
 						{photo.caption}
 					</div>
