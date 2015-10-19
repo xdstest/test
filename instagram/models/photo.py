@@ -3,6 +3,7 @@
 import re
 from pilkit.lib import Image
 
+from django.core.urlresolvers import reverse
 from django.db import models
 
 from imagekit.models import ProcessedImageField, ImageSpecField
@@ -155,6 +156,20 @@ class Photo(models.Model):
             if tag not in existed_tags:
                 obj = PhotoTag(photo=self, tag=tag)
                 self.phototag_set.add(obj)
+
+    def as_dict(self):
+        return {
+            'id': self.id,
+            'caption': self.caption,
+            'visibility': self.visibility,
+            'photo_full_url': self.photo_full.url,
+            'width_photo_full': self.width_photo_full,
+            'height_photo_full': self.height_photo_full,
+            'photo_timeline_url': self.photo_timeline.url,
+            'photo_timeline_2x_url': self.photo_timeline_2x.url,
+            'user_username': self.user.username,
+            'user_url': reverse('timeline-user', kwargs={'username': self.user.username})
+        }
 
 
 class PhotoTag(models.Model):

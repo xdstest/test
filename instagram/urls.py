@@ -14,6 +14,12 @@ urlpatterns = [
     url(r'^user/(?P<username>[\w.@+-]+)/$', UserTimeline.as_view(), name='timeline-user'),
     url(r'^user/(?P<username>[\w.@+-]+)/tag/(?P<tag>[\w]+)/$', TagUserTimeline.as_view(), name='timeline-user-tag'),
 
+    url(r'^api/$', BaseTimeline.as_view(), {'type': 'api'}, name='api-index'),
+    url(r'^api/tag/(?P<tag>[\w]+)/$', TagTimeline.as_view(), {'type': 'api'}, name='api-timeline-tag'),
+    url(r'^api/user/(?P<username>[\w.@+-]+)/$', UserTimeline.as_view(), {'type': 'api'}, name='api-timeline-user'),
+    url(r'^api/user/(?P<username>[\w.@+-]+)/tag/(?P<tag>[\w]+)/$', TagUserTimeline.as_view(), {'type': 'api'},
+        name='api-timeline-user-tag'),
+
     url(r'^login/$', sensitive_post_parameters()(SignIn.as_view()), name='user-sign-in'),
     url(r'^join/$', SignUp.as_view(), name='user-sign-up'),
     url(r'^logout/$', SignOut.as_view(), name='user-sign-out'),
