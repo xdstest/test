@@ -24,6 +24,10 @@ class _PhotosStore extends EventEmitter {
 		this.removeListener(CHANGE_EVENT, callback);
 	}
 
+	getById(id){
+		return this.photos.find(item => item.id === id);
+	}
+
 	getAll() {
 		return this.photos;
 	}

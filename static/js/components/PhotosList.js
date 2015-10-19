@@ -28,9 +28,9 @@ class PhotosList extends Component {
 		});
 	}
 
-	photoOnClick(photo) {
+	photoOnClick(photo_id) {
 		if (typeof this.props.photoOnClick === 'function') {
-			return this.props.photoOnClick(photo);
+			return this.props.photoOnClick(photo_id);
 		}
 	}
 

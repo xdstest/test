@@ -8,7 +8,7 @@ class PhotoItem extends Component {
 
 	onClick() {
 		if (typeof this.props.onClick === 'function') {
-			return this.props.onClick(this);
+			return this.props.onClick(this.props.photo.id);
 		}
 	}
 

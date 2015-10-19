@@ -97,7 +97,12 @@ class Gallery extends Component {
 		});
 	}
 
-	photoShow(photo) {
+	photoShow(photo_id) {
+		let photo = PhotosStore.getById(photo_id);
+		if (!photo) {
+			return;
+		}
+
 		this.setState({
 			photoInDialog: photo
 		});
