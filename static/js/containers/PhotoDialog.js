@@ -37,11 +37,16 @@ class PhotoDialog extends Component {
 	render() {
 		let photo = this.props.photo;
 		return (
-			<dialog className="i-dialog-photo">
-				I'm a dialog!
-				<form method="dialog">
-					<input type="submit" value="Close"/>
-				</form>
+			<dialog>
+				<div className="i-dialog-photo">
+					<div className="i-dialog-photo__image">
+						<img src={photo.photo_full_url} width="100%" height="100%" alt="" />
+					</div>
+					<div class="i-dialog-photo__caption">
+						<h3><a href={photo.user_url}>{photo.user_username}</a></h3>
+						{photo.caption}
+					</div>
+				</div>
 			</dialog>
 		);
 	}

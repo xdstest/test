@@ -3,6 +3,7 @@
 import re
 from pilkit.lib import Image
 
+from django.core.urlresolvers import reverse
 from django.db import models
 
 from imagekit.models import ProcessedImageField, ImageSpecField
@@ -166,6 +167,8 @@ class Photo(models.Model):
             'height_photo_full': self.height_photo_full,
             'photo_timeline_url': self.photo_timeline.url,
             'photo_timeline_2x_url': self.photo_timeline_2x.url,
+            'user_username': self.user.username,
+            'user_url': reverse('timeline-user', kwargs={'username': self.user.username})
         }
 
 

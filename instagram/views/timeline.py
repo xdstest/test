@@ -41,7 +41,7 @@ class BaseTimeline(TemplateView):
         photos = self._photos_set(**kwargs)
         if not context['user_can_edit_photos']:
             photos = photos.filter(visibility=Photo.VISIBILITY_PUBLIC)
-        context['photos'] = photos.order_by('-created')
+        context['photos'] = photos.prefetch_related('user').order_by('-created')
 
     def get_context_gallery_json_data(self, context, **kwargs):
         gallery_data = {
@@ -85,7 +85,7 @@ class UserTimeline(UploadPhoto, BaseTimeline):
         photos = self._photos_set(**kwargs).filter(user=context['timeline_user'])
         if not context['user_can_edit_photos']:
             photos = photos.exclude(visibility=Photo.VISIBILITY_PRIVATE)
-        context['photos'] = photos.order_by('-created')
+        context['photos'] = photos.prefetch_related('user').order_by('-created')
 
     def get_context_data(self, **kwargs):
         context = {}

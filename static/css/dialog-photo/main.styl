@@ -1,0 +1,25 @@
+.i-dialog-photo
+	display flex
+	flex-wrap nowrap
+
+	@media (max-width: 450px)
+		&
+			flex-wrap wrap
+
+	&__image
+		background #000
+
+	&__caption
+		width 400px
+		box-sizing border-box
+		padding 0 30px
+
+		@media (max-width: 768px)
+			&
+				padding 30px 0
+				width 100%
+
+		& h3
+			margin-top 0
+
+
