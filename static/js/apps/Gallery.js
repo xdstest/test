@@ -13,7 +13,7 @@ export default function (options) {
 	GalleryApiActions.reciveInitPhotos(options.photos);
 
 	ReactDOM.render(
-		<Gallery apiEndpoint={options.apiEndpoint} userCanEditPhotos={options.userCanEditPhotos} />,
+		<Gallery requestUser={options.requestUser} requestUserIsModerator={options.requestUserIsModerator} apiEndpoint={options.apiEndpoint} />,
 		document.getElementsByClassName('i-timeline__wrap')[0]
 	);
 }

@@ -27,14 +27,17 @@ class Gallery extends Component {
 		this.clickLoadMore = this.clickLoadMore.bind(this);
 		this.photoShow = this.photoShow.bind(this);
 		this.photoClose = this.photoClose.bind(this);
+		this.onUploadPhoto = this.onUploadPhoto.bind(this);
 	}
 
 	componentDidMount() {
 		window.addEventListener('scroll', this.onScroll);
+		window.addEventListener('photo_upload', this.onUploadPhoto);
 	}
 
 	componentWillUnmount() {
 		window.removeEventListener('scroll', this.onScroll);
+		window.addEventListener('photo_upload', this.onUploadPhoto);
 	}
 
 	onScroll(event) {
@@ -114,6 +117,14 @@ class Gallery extends Component {
 		});
 	}
 
+	onUploadPhoto() {
+		GalleryApiActions.clearPhotos();
+		this.setState({
+			canLoadMore: true
+		});
+		this.fetchPhotos();
+	}
+
 	render() {
 		let contentButtonLoadMore = '';
 		if (this.state.showLoadMoreButton) {
@@ -133,7 +144,8 @@ class Gallery extends Component {
 		let contentPhotoDialog = '';
 		if (this.state.photoInDialog) {
 			contentPhotoDialog = (
-				<PhotoDialog photo={this.state.photoInDialog} onClose={this.photoClose} />
+				<PhotoDialog photo={this.state.photoInDialog} onClose={this.photoClose}
+				             requestUser={this.props.requestUser} requestUserIsModerator={this.props.requestUserIsModerator} />
 			);
 		}
 
@@ -148,12 +160,9 @@ class Gallery extends Component {
 }
 
 Gallery.propTypes = {
-	userCanEditPhotos: PropTypes.bool.isRequired,
+	requestUser: PropTypes.string.isRequired,
+	requestUserIsModerator: PropTypes.bool.isRequired,
 	apiEndpoint: PropTypes.string.isRequired
-};
-
-Gallery.defaultProps = {
-	userCanEditPhotos: false
 };
 
 export default Gallery;

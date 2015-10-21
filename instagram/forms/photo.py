@@ -18,3 +18,13 @@ class UploadPhotoForm(ModelForm):
         model = Photo
         fields = ("photo", "caption", "visibility")
 
+
+class EditPhotoForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(EditPhotoForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.add_input(Submit('submit', 'Save'))
+
+    class Meta:
+        model = Photo
+        fields = ("caption", "visibility")

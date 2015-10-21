@@ -6,7 +6,7 @@ class PhotoItem extends Component {
 		this.onClick = this.onClick.bind(this);
 	}
 
-	onClick() {
+	onClick(event) {
 		if (typeof this.props.onClick === 'function') {
 			return this.props.onClick(this.props.photo.id);
 		}

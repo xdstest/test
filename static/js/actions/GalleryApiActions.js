@@ -14,5 +14,11 @@ export default {
 			type: ActionTypes.RECEIVE_PHOTOS,
 			photos: photos
 		});
+	},
+
+	clearPhotos: function () {
+		GalleryAppDispatcher.dispatch({
+			type: ActionTypes.CLEAR_PHOTOS
+		});
 	}
 };

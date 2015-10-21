@@ -53,6 +53,15 @@ let UploadPhotoForm = class {
 	formSubmitSuccess(response) {
 		this.form.reset();
 		this.hideForm();
+
+		let event;
+		if (window.CustomEvent) {
+			event = new CustomEvent('photo_upload');
+		} else {
+			event = document.createEvent('photo_upload');
+			event.initCustomEvent('my-event');
+		}
+		window.dispatchEvent(event);
 	}
 
 	formSubmitError(err) {

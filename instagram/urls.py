@@ -4,6 +4,7 @@ from django.views.decorators.debug import sensitive_post_parameters
 
 from views.user.sign import SignIn, SignUp, SignOut
 from views.timeline import BaseTimeline, UserTimeline, TagTimeline, TagUserTimeline
+from views.user.photo import EditPhoto, DeletePhoto
 
 
 urlpatterns = [
@@ -13,6 +14,9 @@ urlpatterns = [
     url(r'^tag/(?P<tag>[\w]+)/$', TagTimeline.as_view(), name='timeline-tag'),
     url(r'^user/(?P<username>[\w.@+-]+)/$', UserTimeline.as_view(), name='timeline-user'),
     url(r'^user/(?P<username>[\w.@+-]+)/tag/(?P<tag>[\w]+)/$', TagUserTimeline.as_view(), name='timeline-user-tag'),
+
+    url(r'^photo/edit/(?P<photo_id>[\d]+)/$', EditPhoto.as_view(), name='photo-edit'),
+    url(r'^photo/delete/(?P<photo_id>[\d]+)/$', DeletePhoto.as_view(), name='photo-delete'),
 
     url(r'^api/$', BaseTimeline.as_view(), {'type': 'api'}, name='api-index'),
     url(r'^api/tag/(?P<tag>[\w]+)/$', TagTimeline.as_view(), {'type': 'api'}, name='api-timeline-tag'),

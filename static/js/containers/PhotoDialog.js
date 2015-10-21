@@ -2,10 +2,13 @@ import 'dialog-polyfill';
 
 import React, { Component, PropTypes } from 'react';
 
+import Button from '../components/Button';
+
 class PhotoDialog extends Component {
 	constructor(props) {
 		super(props);
 		this.close = this.close.bind(this);
+		this.clickEditButton = this.clickEditButton.bind(this);
 		this.dialog = null;
 	}
 
@@ -34,17 +37,31 @@ class PhotoDialog extends Component {
 		this.props.onClose();
 	}
 
+	clickEditButton() {
+		window.location.pathname = '/photo/edit/' + this.props.photo.id + '/';
+	}
+
 	render() {
 		let photo = this.props.photo;
+		let contentEditButton = '';
+		if (photo.user_username === this.props.requestUser || this.props.requestUserIsModerator) {
+			contentEditButton = (
+				<div className="i-dialog-photo__edit-btn">
+					<Button text="Edit" onClick={this.clickEditButton} btnClass="btn-default" />
+				</div>
+			);
+		}
 		return (
 			<dialog className="i-dialog-photo__wrap">
 				<div className="i-dialog-photo">
 					<div className="i-dialog-photo__image">
-						<img src={photo.photo_full_url} width="100%" height="100%" alt="" />
+						<img src={photo.photo_full_url} width="100%" alt="" />
 					</div>
 					<div className="i-dialog-photo__caption">
+						<span className="glyphicon glyphicon-remove i-dialog-photo__close" onClick={this.close}></span>
 						<h3><a href={photo.user_url}>{photo.user_username}</a></h3>
-						{photo.caption}
+						{contentEditButton}
+						<div dangerouslySetInnerHTML={{__html: photo.caption}} />
 					</div>
 				</div>
 			</dialog>
@@ -53,6 +70,8 @@ class PhotoDialog extends Component {
 }
 
 PhotoDialog.propTypes = {
+	requestUser: PropTypes.string.isRequired,
+	requestUserIsModerator: PropTypes.bool.isRequired,
 	photo: PropTypes.object.isRequired,
 	onClose: PropTypes.func.isRequired
 };

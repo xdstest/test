@@ -63,6 +63,11 @@ PhotosStore.dispatchToken = GalleryAppDispatcher.register(action => {
 		PhotosStore.emitChange();
 		break;
 
+	case ActionTypes.CLEAR_PHOTOS:
+		PhotosStore.reset();
+		PhotosStore.emitChange();
+		break;
+
 	default:
 		// do nothing
 	}

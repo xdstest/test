@@ -1,0 +1,14 @@
+{% extends 'main.jinja2' %}
+
+{% block content %}
+	<div style="margin: 50px 0;">
+		<img src="{{ form.instance.photo_full.url }}" width="100%" />
+		<div style="margin-top: 25px;">
+			<a class="btn btn-danger" href="{{ url('photo-delete', form.instance.id) }}">Delete</a>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-8">{{ crispy(form) }}</div>
+	</div>
+{% endblock %}

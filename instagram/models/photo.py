@@ -61,6 +61,9 @@ class Transpose(object):
 
 
 class Photo(models.Model):
+    tag_re = ur'#([\w]+)'
+    tag_re_with_hash = ur'(#([\w]+))'
+
     VISIBILITY_PUBLIC = 'public'
     VISIBILITY_HIDE_FROM_HOMEPAGE = 'hide_from_homepage'
     VISIBILITY_PRIVATE = 'private'
@@ -133,9 +136,9 @@ class Photo(models.Model):
             self.height_photo_full = self.photo_full.height
             super(Photo, self).save(*args, **kwargs)
 
-    @staticmethod
-    def _parse_tags_from_caption(caption):
-        return set(re.findall(ur'#([\w]+)', caption, re.I + re.U))
+    @classmethod
+    def _parse_tags_from_caption(cls, caption):
+        return set(re.findall(cls.tag_re, caption, re.I + re.U))
 
     def update_tags(self):
         old_tags = {item.tag: item.id for item in self.phototag_set.all()}
@@ -168,7 +171,7 @@ class Photo(models.Model):
             'photo_timeline_url': self.photo_timeline.url,
             'photo_timeline_2x_url': self.photo_timeline_2x.url,
             'user_username': self.user.username,
-            'user_url': reverse('timeline-user', kwargs={'username': self.user.username})
+            'user_url': reverse('timeline-user', kwargs={'username': self.user.username}),
         }
 
 
