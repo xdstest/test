@@ -42,7 +42,6 @@ class BaseTimeline(TemplateView):
         caption = unicode(escape(photo_dict['caption']))
         photo_dict['caption'] = re.sub(Photo.tag_re_with_hash, cls._wrap_tag,
                                        caption, flags=re.I + re.U)
-        print photo_dict['caption']
         return photo_dict
 
     @classmethod
