@@ -23,6 +23,7 @@ INSTALLED_APPS = (
     'imagekit',
     'django_jinja',
     'crispy_forms',
+    'storages',
     'instagram',
 )
 
@@ -122,3 +123,8 @@ TEMPLATES = [
     },
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+DEFAULT_FILE_STORAGE = 'libs.storages.S3Storage.S3Storage'
+AWS_ACCESS_KEY_ID = ''
+AWS_SECRET_ACCESS_KEY = ''
+AWS_STORAGE_BUCKET_NAME = ''

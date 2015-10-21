@@ -69,7 +69,7 @@ class Gallery extends Component {
 			isFetching: true
 		});
 
-		let offset = PhotosStore.getAll().length;
+		let offset = PhotosStore.length();
 		fetch(this.props.apiEndpoint + '?offset=' + offset, {
 			headers: new Headers({
 				'X-Requested-With': 'XMLHttpRequest'
@@ -127,7 +127,7 @@ class Gallery extends Component {
 
 	render() {
 		let contentButtonLoadMore = '';
-		if (this.state.showLoadMoreButton) {
+		if (this.state.showLoadMoreButton && PhotosStore.length()) {
 			contentButtonLoadMore = (
 				<div className="i-timeline__load-more">
 					<Button text="Load more" onClick={this.clickLoadMore} btnClass="btn-default btn-lg" />

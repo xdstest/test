@@ -44,6 +44,10 @@ class _PhotosStore extends EventEmitter {
 			}
 		});
 	}
+
+	length() {
+		return this.photos.length;
+	}
 }
 
 _PhotosStore.dispatchToken = null;
