@@ -55,7 +55,7 @@ class PhotoDialog extends Component {
 			<dialog className="i-dialog-photo__wrap">
 				<div className="i-dialog-photo">
 					<div className="i-dialog-photo__image">
-						<img src={photo.photo_full_url} width="100%" alt="" />
+						<img src={photo.photo_full_url} alt="" />
 					</div>
 					<div className="i-dialog-photo__caption">
 						<span className="glyphicon glyphicon-remove i-dialog-photo__close" onClick={this.close}></span>
