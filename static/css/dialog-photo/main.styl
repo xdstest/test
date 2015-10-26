@@ -1,6 +1,8 @@
 .i-dialog-photo
 	display flex
 	flex-wrap nowrap
+	background #fff
+	border 3px #000 solid
 
 	@media (max-width: 450px)
 		&
@@ -35,3 +37,17 @@
 		@media (max-width: 450px)
 			&
 				top 0
+
+	&__wrap[open]
+		padding 14px
+		position fixed
+		top 0
+		bottom 0
+		left 0
+		right 0
+		display flex
+		justify-content center
+		align-items center
+		align-content center
+		background transparent
+		border none
