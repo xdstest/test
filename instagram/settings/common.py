@@ -78,6 +78,8 @@ TESTS_REPORTS_ROOT = os.path.join(BASE_DIR, 'reports')
 
 AUTH_USER_MODEL = 'instagram.User'
 
+LOGIN_URL = '/login/'
+
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',

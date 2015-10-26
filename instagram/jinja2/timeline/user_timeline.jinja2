@@ -8,19 +8,23 @@
 {% endblock %}
 
 {% block form %}
-	<div class="i-upload-photo row">
-		<button type="button" class="btn btn-primary btn-lg i-upload-photo__btn">
-			<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-			Add
-		</button>
+	{% if user %}
+		<div class="i-upload-photo row">
+			<button type="button" class="btn btn-primary btn-lg i-upload-photo__btn">
+				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+				Add
+			</button>
 
-		<div class="i-upload-photo__wrap i-upload-photo__wrap_mod_hidden">
-			{{ crispy(form) }}
+			<div class="i-upload-photo__wrap i-upload-photo__wrap_mod_hidden">
+				{{ crispy(form) }}
+			</div>
 		</div>
-	</div>
+	{% endif %}
 {% endblock %}
 
 {% block javascript %}
 	{{ super() }}
-	window.apps.UploadPhoto(document.getElementsByClassName('i-upload-photo')[0]);
+	{% if user %}
+		window.apps.UploadPhoto(document.getElementsByClassName('i-upload-photo')[0]);
+	{% endif %}
 {% endblock %}

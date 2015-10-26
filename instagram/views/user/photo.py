@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
+from django.conf import settings
 from django.core.urlresolvers import reverse
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse, HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.views.generic import RedirectView
 from django.views.generic.edit import FormView
@@ -11,7 +12,7 @@ from instagram.views.user import LoginRequiredMixin
 from instagram.forms.photo import UploadPhotoForm, EditPhotoForm
 
 
-class UploadPhoto(LoginRequiredMixin, FormView):
+class UploadPhoto(FormView):
     form_class = UploadPhotoForm
 
     def get_success_url(self):
@@ -31,6 +32,11 @@ class UploadPhoto(LoginRequiredMixin, FormView):
             return JsonResponse(form.errors, status=400)
         else:
             return super(UploadPhoto, self).form_invalid(form)
+
+    def post(self, request, *args, **kwargs):
+        if not request.user.is_authenticated():
+            return HttpResponseRedirect(settings.LOGIN_URL)
+        return super(UploadPhoto, self).post(request, *args, **kwargs)
 
 
 class EditPhoto(LoginRequiredMixin, FormView):
